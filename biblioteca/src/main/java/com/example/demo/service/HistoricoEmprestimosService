@@ -1,0 +1,20 @@
+package com.biblioteca.service;
+
+import com.biblioteca.model.Livro;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+public class HistoricoEmprestimosService {
+    private Map<String, List<String>> historico = new HashMap<>();
+
+    public void registrarEmprestimo(String usuario, Livro livro) {
+        historico.putIfAbsent(usuario, new ArrayList<>());
+        historico.get(usuario).add(livro.getTitulo());
+    }
+
+    public List<String> getHistorico(String usuario) {
+        return historico.getOrDefault(usuario, new ArrayList<>());
+    }
+}

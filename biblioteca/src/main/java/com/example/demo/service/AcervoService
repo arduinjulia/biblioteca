@@ -1,0 +1,24 @@
+package com.biblioteca.service;
+
+import com.biblioteca.model.Livro;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+public class AcervoService {
+    private TreeMap<String, List<Livro>> livrosPorTipo = new TreeMap<>();
+
+    public void adicionarLivro(Livro livro) {
+        livrosPorTipo.putIfAbsent(livro.getTipo(), new ArrayList<>());
+        livrosPorTipo.get(livro.getTipo()).add(livro);
+    }
+s
+    public List<Livro> listarPorTipo(String tipo) {
+        return livrosPorTipo.getOrDefault(tipo, new ArrayList<>());
+    }
+
+    public Map<String, List<Livro>> listarTodos() {
+        return livrosPorTipo;
+    }
+}

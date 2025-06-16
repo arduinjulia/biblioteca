@@ -1,0 +1,34 @@
+package com.example.demo.controller;
+import com.example.demo.model.Livro;
+import com.example.demo.service.AcervoService;
+import com.example.demo.service.HistoricoEmprestimosService;
+import com.example.demo.service.FilaReservaService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "*")
+public class BibliotecaController {
+
+    private final AcervoService acervoService;
+    private final HistoricoEmprestimosService historicoService;
+    private final FilaReservaService filaService;
+
+    public BibliotecaController(AcervoService acervoService, HistoricoEmprestimosService historicoService, FilaReservaService filaService) {
+        this.acervoService = acervoService;
+        this.historicoService = historicoService;
+        this.filaService = filaService;
+    }
+
+    @PostMapping("/livros")
+    public void adicionarLivros(@RequestBody Livro livro) {
+        acervoService.adicionarLivro(livro);
+    }
+
+    @GetMapping("/livros")
+    public Map<String, List<Livro>> listarTodosLivros() {
+        return acervoService.listarTodos();
+    }
+}

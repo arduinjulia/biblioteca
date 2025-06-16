@@ -1,0 +1,27 @@
+package com.biblioteca.service;
+
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+public class FilaReservaService {
+    private Map<String, Queue<String>> reservas = new HashMap<>();
+
+    public void adicionarReserva(String livro, String usuario) {
+        reservas.putIfAbsent(livro, new LinkedList<>());
+        reservas.get(livro).add(usuario);
+    }
+
+    public String proximo(String livro) {
+        Queue<String> fila = reservas.get(livro);
+        if (fila != null && !fila.isEmpty()) {
+            return fila.poll();
+        }
+        return null;
+    }
+
+    public Queue<String> getFila(String livro) {
+        return reservas.getOrDefault(livro, new LinkedList<>());
+    }
+}
